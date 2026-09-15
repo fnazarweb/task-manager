@@ -1,3 +1,13 @@
-const sum = (a, b) => a + b;
+const express = require("express");
 
-console.log(sum(10, 5));
+const app = express();
+const port = 3000;
+
+// middleware
+app.use(express.json());
+
+app.listen(3000, () => {
+  console.log(
+    `Server listening on port ${port} and starting at http://localhost:${port}`,
+  );
+});

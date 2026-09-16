@@ -11,6 +11,7 @@ export default defineConfig([
         languageOptions: { globals: globals.node },
         rules: {
             'no-console': 'off',
+            'no-unused-vars': 'warn',
         },
     },
     eslintConfigPrettier,

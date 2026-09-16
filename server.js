@@ -9,6 +9,7 @@ import './config/db.js';
 
 // Routes
 import authRouter from './routes/authRoutes.js';
+import taskRouter from './routes/taskRoutes.js';
 
 const app = express();
 const port = 3000;
@@ -17,6 +18,7 @@ const port = 3000;
 app.use(express.json());
 
 app.use('/api', authRouter);
+app.use('/api', taskRouter);
 
 app.listen(3000, () => {
     console.log(

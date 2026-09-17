@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import swaggerUI from 'swagger-ui-express';
 import './config/db.js';

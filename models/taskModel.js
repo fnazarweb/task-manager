@@ -1,15 +1,25 @@
 import mongoose from 'mongoose';
 
 const taskSchema = mongoose.Schema({
-    description: {
+    title: {
         type: String,
-        require: true,
+        required: true,
     },
 
-    complited: {
+    description: {
+        type: String,
+        required: true,
+    },
+
+    checked: {
         type: Boolean,
         default: false,
     },
+
+    creationDate: {
+        type: String,
+    },
+
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

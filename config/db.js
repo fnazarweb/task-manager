@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 
-const URI = `mongodb+srv://fnazzar111_db_user2:TEdPq3HC8UsDTpqh@cluster0.36mvuua.mongodb.net/?appName=Cluster0`;
+const DB_USERNAME = process.env.DB_USERNAME;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+const URI = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@cluster0.36mvuua.mongodb.net/?appName=Cluster0`;
 
 mongoose
     .connect(URI)

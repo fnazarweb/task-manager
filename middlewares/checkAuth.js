@@ -2,18 +2,14 @@ import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
 
 export default async (req, res, next) => {
-    // check for bearer auth header
-    const authHeader = req.headers.authorization;
+    // check token from cookies
+    const token = req.cookies.token;
 
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return res
-            .status(401)
-            .json({ message: 'Invalid authorization header' });
+    if (!token) {
+        return res.status(401).json({ message: 'Unauthorized' });
     }
 
     // verify bearer jwt token
-    const token = authHeader.split(' ')[1];
-
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.userId);
@@ -23,7 +19,9 @@ export default async (req, res, next) => {
         }
 
         //attach user to request object
-        req.user = user._doc;
+        const { password, ...userData } = user._doc;
+        req.user = userData;
+
         next();
     } catch (e) {
         return res.status(401).json({ message: 'Invalid or expired token' });

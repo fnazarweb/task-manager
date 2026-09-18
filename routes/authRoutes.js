@@ -1,5 +1,6 @@
 import express from 'express';
 import * as authController from '../controllers/authController.js';
+import checkAuth from '../middlewares/checkAuth.js';
 
 const router = express.Router();
 
@@ -66,5 +67,35 @@ router.post('/auth/register', authController.register);
  *         description: Bad request
  */
 router.post('/auth/login', authController.login);
+
+/**
+ * @openapi
+ * /api/auth/me:
+ *   get:
+ *     tags:
+ *       - Auth
+ *     summary: Get current authenticated user
+ *     responses:
+ *       200:
+ *         description: Current user data
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: User not found
+ */
+router.get('/auth/me', checkAuth, authController.me);
+
+/**
+ * @openapi
+ * /api/auth/logout:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     summary: Logout user
+ *     responses:
+ *       204:
+ *         description: Logout successful
+ */
+router.post('/auth/logout', authController.logout);
 
 export default router;

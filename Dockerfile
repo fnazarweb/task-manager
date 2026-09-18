@@ -1,6 +1,13 @@
-FROM node:latest
+FROM node:24
+
 WORKDIR /app
-COPY . /app
-RUN npm install
+
+COPY package*.json ./
+
+RUN npm ci
+
+COPY . .
+
 EXPOSE 8000
+
 CMD ["npm", "start"]

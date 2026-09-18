@@ -3,6 +3,7 @@ import express from 'express';
 import swaggerUI from 'swagger-ui-express';
 import './config/db.js';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 // Routes
 import authRouter from './routes/authRoutes.js';
@@ -17,10 +18,12 @@ const clientUrl = 'http://localhost:3000';
 app.use(
     cors({
         origin: clientUrl,
+        credentials: true,
     })
 );
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 

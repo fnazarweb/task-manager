@@ -1,4 +1,3 @@
-import { version } from 'mongoose';
 import swaggerJSDoc from 'swagger-jsdoc';
 
 const options = {

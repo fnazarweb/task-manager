@@ -7,10 +7,10 @@ export default async (req, res, next) => {
         if (req.user.role !== 'admin') {
             return res.status(403).json({ message: `Access denied` });
         }
+
+        next();
     } catch (e) {
         console.error(e);
         return res.status(500).json({ message: e.message });
     }
-
-    next();
 };

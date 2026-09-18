@@ -11,9 +11,8 @@ import taskRouter from './routes/taskRoutes.js';
 import swaggerSpec from './config/swagger.js';
 
 const app = express();
-const port = 8000;
-const clientUrl = 'http://localhost:3000';
-
+const port = process.env.PORT || 8000;
+const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
 // middleware
 app.use(
     cors({

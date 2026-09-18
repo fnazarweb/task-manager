@@ -2,6 +2,15 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
+const cookieOptions = {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
+    maxAge: 60 * 60 * 1000,
+};
+
 export const register = async (req, res) => {
     try {
         const { email, password: pwd, role } = req.body;
@@ -21,12 +30,7 @@ export const register = async (req, res) => {
             { expiresIn: '1h' }
         );
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: false,
-            sameSite: 'lax',
-            maxAge: 60 * 60 * 1000,
-        });
+        res.cookie('token', token, cookieOptions);
 
         const { password, ...userData } = user._doc;
 
@@ -61,12 +65,7 @@ export const login = async (req, res) => {
             { expiresIn: '1h' }
         );
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: false,
-            sameSite: 'lax',
-            maxAge: 60 * 60 * 1000,
-        });
+        res.cookie('token', token, cookieOptions);
 
         const { password, ...userData } = user._doc;
         return res.status(200).json({
@@ -85,12 +84,7 @@ export const me = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-    res.clearCookie('token', {
-        httpOnly: true,
-        secure: false,
-        sameSite: 'lax',
-        maxAge: 60 * 60 * 1000,
-    });
+    res.clearCookie('token', cookieOptions);
 
     return res.status(204).end();
 };
